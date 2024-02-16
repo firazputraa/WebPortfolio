@@ -29,13 +29,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Certification</a>
+              <a class="nav-link" href="#certif">Certification</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" href="#contact">Contact</a>
             </li>
           </ul>
         </div>
@@ -113,20 +113,28 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <form>
-          <div class="mb-3">
+
+        <div class="alert alert-warning alert-dismissible fade show d-none my-Alert" role="alert">
+          <strong>Terima Kasih</strong> pesan anda sudah kami terima!!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <form name="submit-form-to-google-sheets">
+          <div class="mb-3" data-aos="fade-left" data-aos-duration="2000">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" aria-describedby="email">
+            <input type="email" class="form-control" id="email" aria-describedby="email" name="email">
           </div>
-          <div class="mb-3">
-            <label for="NamaLengkap" class="form-label">Nama Lengkap</label>
-            <input type="name" class="form-control" id="name" aria-describedby="name">
-          </div>
-          <div class="mb-3">
+          <div class="mb-3" data-aos="fade-up" data-aos-duration="2000">
             <label for="Pesan" class="form-label">Pesan</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="pesan"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-outline-secondary btn-kirim">Submit</button>
+
+          <button class="btn btn-outline-secondary btn-loading d-none" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="visually-hidden">Loading...</span>
+          </button>
+
         </form>
       </div>
     </div>
@@ -149,5 +157,34 @@
       AOS.init();
     </script>
     <!-- animate on scroll end -->
+
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbxEslUO_wpu_G30jXkqsYlcU2lhi61cbC1aBqZIi_WXhCSLnYh196Ow0DYVq1jHZv1aow/exec'
+      const form = document.forms['submit-form-to-google-sheets']
+      const btnkirim = document.querySelector('.btn-kirim');
+      const btnloading = document.querySelector('.btn-loading');
+      const myAlert = document.querySelector('.my-Alert');
+    
+      form.addEventListener('submit', e => {
+        e.preventDefault()
+        btnloading.classList.toggle('d-none');
+        btnkirim.classList.toggle('d-none');
+
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => {
+            btnloading.classList.toggle('d-none');
+            btnkirim.classList.toggle('d-none');
+
+            myAlert.classList.toggle('d-none');
+
+            form.reset();
+            console.log('Success!', response)
+          })
+
+          .catch(error => console.error('Error!', error.message))
+      })
+    </script>
+
   </body>
 </html>
