@@ -1,0 +1,44 @@
+body{
+    background-color: #FFD0EC;
+}
+
+nav{
+    background-color: #535c91;
+}
+
+.container ul li a:hover{
+    padding: 5px;
+    border-radius: 50px;
+    background-color: #FFD0EC;
+}
+
+.jumbotron{
+    padding: 2rem;
+    color: #280274;
+    /* border-bottom: solid ; */
+    background-image: linear-gradient(#280274,#535c91, #FFD0EC);
+}
+
+.jumbotron h4{
+    padding-top: 2rem;
+}
+
+#about{
+    padding-top: 7rem;
+}
+
+#certif{
+    padding-top: 7rem;
+}
+
+#wave{
+    margin-bottom: -5px;
+}
+
+footer{
+    background-color: #535c91;
+}
+
+
+
+
